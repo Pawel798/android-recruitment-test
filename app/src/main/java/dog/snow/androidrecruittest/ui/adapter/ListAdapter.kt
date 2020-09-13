@@ -1,5 +1,7 @@
 package dog.snow.androidrecruittest.ui.adapter
 
+import android.content.Context
+import android.content.res.Configuration
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,8 +16,12 @@ import dog.snow.androidrecruittest.R
 import dog.snow.androidrecruittest.repository.model.RawPhoto
 import java.util.*
 
-class ListAdapter(private var items: MutableList<RawPhoto>,private val onClick: (rawPhoto: RawPhoto, photoView:View, titleView:View, albumTitleView:View) -> Unit) :
-    androidx.recyclerview.widget.ListAdapter<RawPhoto, ListAdapter.ViewHolder>(DIFF_CALLBACK), Filterable {
+class ListAdapter(
+    private var items: MutableList<RawPhoto>,
+    private val onClick: (rawPhoto: RawPhoto, photoView: View, titleView: View, albumTitleView: View) -> Unit
+) :
+    androidx.recyclerview.widget.ListAdapter<RawPhoto, ListAdapter.ViewHolder>(DIFF_CALLBACK),
+    Filterable {
     var mFilteredList: MutableList<RawPhoto> = items
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -29,9 +35,11 @@ class ListAdapter(private var items: MutableList<RawPhoto>,private val onClick: 
 
     class ViewHolder(
         itemView: View,
-        private val onClick: (rawPhoto: RawPhoto, photoView:View, titleView:View, albumTitleView:View) -> Unit
+        private val onClick: (rawPhoto: RawPhoto, photoView: View, titleView: View, albumTitleView: View) -> Unit
     ) :
         RecyclerView.ViewHolder(itemView) {
+        var placeholderRes: Int = getPlaceHolder(itemView.context)
+
         fun bind(item: RawPhoto) = with(itemView) {
             val ivThumb: ImageView = findViewById(R.id.iv_thumb)
             val tvTitle: TextView = findViewById(R.id.tv_photo_title)
@@ -40,11 +48,23 @@ class ListAdapter(private var items: MutableList<RawPhoto>,private val onClick: 
             tvAlbumTitle.text = item.album.title
             Picasso.get()
                 .load(item.thumbnailUrl)
-                .placeholder(R.drawable.ic_placeholder)
+                .placeholder(placeholderRes)
                 .into(ivThumb)
-            setOnClickListener { onClick(item, ivThumb,tvTitle,tvAlbumTitle) }
+            setOnClickListener { onClick(item, ivThumb, tvTitle, tvAlbumTitle) }
+        }
+
+        private fun getPlaceHolder(context: Context): Int {
+            val nightModeFlags: Int = context.resources.configuration.uiMode and
+                    Configuration.UI_MODE_NIGHT_MASK
+            when (nightModeFlags) {
+                Configuration.UI_MODE_NIGHT_YES -> {
+                    return R.drawable.ic_placeholder_dark
+                }
+            }
+            return R.drawable.ic_placeholder
         }
     }
+
 
     companion object {
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<RawPhoto>() {
@@ -68,9 +88,12 @@ class ListAdapter(private var items: MutableList<RawPhoto>,private val onClick: 
                 } else {
 
                     val filteredList = items
-                        .filter { (it.title.toLowerCase(Locale.ROOT).contains(charString)) ||  (it.album.title.toLowerCase(
-                            Locale.ROOT
-                        ).contains(charString))}
+                        .filter {
+                            (it.title.toLowerCase(Locale.ROOT)
+                                .contains(charString)) || (it.album.title.toLowerCase(
+                                Locale.ROOT
+                            ).contains(charString))
+                        }
                         .toMutableList()
 
                     filteredList
@@ -81,9 +104,13 @@ class ListAdapter(private var items: MutableList<RawPhoto>,private val onClick: 
                 return filterResults
             }
 
-            override fun publishResults(charSequence: CharSequence, filterResults: Filter.FilterResults) {
+            override fun publishResults(
+                charSequence: CharSequence,
+                filterResults: Filter.FilterResults
+            ) {
                 submitList(filterResults.values as MutableList<RawPhoto>)
                 notifyDataSetChanged()
             }
-        }    }
+        }
+    }
 }
