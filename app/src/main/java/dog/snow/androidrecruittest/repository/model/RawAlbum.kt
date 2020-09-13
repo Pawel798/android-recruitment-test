@@ -7,5 +7,7 @@ import kotlinx.android.parcel.Parcelize
 data class RawAlbum(
     val id: Int,
     val userId: Int,
-    val title: String
+    val title: String,
+    var  user : RawUser
+
 ) : Parcelable

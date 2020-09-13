@@ -9,5 +9,6 @@ data class RawPhoto(
     val albumId: Int,
     val title: String,
     val url: String,
-    val thumbnailUrl: String
+    val thumbnailUrl: String,
+    var  album : RawAlbum
 ) : Parcelable

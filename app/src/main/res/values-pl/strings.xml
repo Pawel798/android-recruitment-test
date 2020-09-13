@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Android Recruit Test</string>
+    <string name="search_hint">Szukaj…</string>
+    <string name="empty_list">Brak danych do wyświetlenia…</string>
+    <string name="empty_filter_list">Brak danych do wyświetlenia: %s</string>
+    <string name="offline_mode">Jesteś w trybie offline</string>
+    <string name="cant_download_dialog_title">Nie można pobrać danych</string>
+    <string name="cant_download_dialog_message">Nie można pobrać danych, sprawdź połączenie z internetem</string>
+    <string name="cant_download_dialog_btn_positive">Spróbuj raz jeszcze</string>
+    <string name="cant_download_dialog_btn_negative">Zamknij</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

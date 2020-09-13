@@ -12,5 +12,5 @@
     <dimen name="splash_logo_sd_text_margin">8dp</dimen>
 
     <dimen name="thumb_size">64dp</dimen>
-    <dimen name="search_size">80dp</dimen>
+    <dimen name="search_size">16dp</dimen>
 </resources>

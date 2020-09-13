@@ -6,5 +6,6 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
     android:fitsSystemWindows="true"
+    style="@style/Widget.AppTheme.AppBar"
     app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
-    app:logo="@drawable/ic_logo_appbar" />
+    app:logo="@drawable/ic_logo_sd_symbol" />

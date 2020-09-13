@@ -1,9 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="Base.AppTheme" parent="@style/Theme.MaterialComponents.DayNight.NoActionBar" />
 
-    <style name="AppTheme" parent="Base.AppTheme" />
+    <style name="AppTheme" parent="Base.AppTheme">
+        <item name="android:windowContentTransitions">true</item>
+
+        <item name="android:colorAccent">@color/light_accent_color</item>
+        <item name="android:colorBackground">@color/light_background_color</item>
+        <item name="android:colorPrimaryDark">@color/light_primary_dark_color</item>
+        <item name="android:colorPrimary">@color/light_primary_color</item>
+        <item name="android:colorError" tools:targetApi="o">@color/light_error_color</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="Progress" parent="Widget.AppCompat.ProgressBar">
+        <item name="colorAccent">@color/light_accent_color</item>
+    </style>
 
     <style name="AppTheme.SplashTheme" />
 
