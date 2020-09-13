@@ -3,6 +3,7 @@ package dog.snow.androidrecruittest.ui.activities
 import android.animation.ObjectAnimator
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
@@ -19,6 +20,7 @@ import dog.snow.androidrecruittest.repository.model.RawPhoto
 import dog.snow.androidrecruittest.viewModels.SplashViewModel
 import kotlinx.android.synthetic.main.layout_progressbar.*
 import kotlinx.android.synthetic.main.splash_activity.*
+import java.security.AccessController.getContext
 
 
 class SplashActivity : AppCompatActivity(R.layout.splash_activity) {
@@ -26,6 +28,7 @@ class SplashActivity : AppCompatActivity(R.layout.splash_activity) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        changeImageDependOnDarkMode()
         viewModel = ViewModelProviders.of(this).get(SplashViewModel::class.java)
         viewModel.errorMessage.observe(this, Observer { errorMessage ->
             if (errorMessage != null) handelError()
@@ -125,5 +128,15 @@ class SplashActivity : AppCompatActivity(R.layout.splash_activity) {
             -mHeight / 1.0f
         )
         animation.start()
+    }
+    private fun changeImageDependOnDarkMode(){
+        val nightModeFlags: Int = this.resources.configuration.uiMode and
+                Configuration.UI_MODE_NIGHT_MASK
+        when (nightModeFlags) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                iv_logo_sd_text.setImageDrawable(getDrawable(R.drawable.ic_logo_sd_text_dark))
+                iv_logo_sd_symbol.setImageDrawable(getDrawable(R.drawable.ic_logo_sd_symbol_dark))
+            }
+        }
     }
 }
